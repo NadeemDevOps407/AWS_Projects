@@ -1,4 +1,4 @@
- # Setting up Lambda Function to Trigger on S3 Upload and Store Information in DynamoDB
+ # S3 Data Processing and Analysis with AWS Lambda and DynamoDB
 
  ![Flowchart](Lambda_function.png)
 
