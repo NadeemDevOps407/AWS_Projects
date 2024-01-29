@@ -2,6 +2,13 @@
 
  ![Flowchart](Lambda_function.png)
 
+***Key features of the project include:***
+
+- Setting up an S3 bucket and configuring event notifications
+- Creating a Lambda function using AWS SDK or programming language of choice
+- Implementing the Lambda function to process data from S3 events
+- Storing relevant information in a DynamoDB table
+
 **Prerequisites**
 
 
