@@ -1,6 +1,9 @@
  # Setting up Lambda Function to Trigger on S3 Upload and Store Information in DynamoDB
 
+ ![Flowchart](Lambda_function.png)
+
 **Prerequisites**
+
 
 Before you begin, make sure you have the following:
 

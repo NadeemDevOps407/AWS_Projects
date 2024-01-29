@@ -1,3 +1,4 @@
+#Imported the python libraries required for this task
 import json
 import os.path 
 import boto3
