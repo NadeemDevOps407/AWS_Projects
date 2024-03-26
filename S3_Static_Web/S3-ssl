@@ -1,0 +1,50 @@
+Host a Static Website on AWS S3 with Custom Domain and SSL Certificate
+Step 1: Host a Static Website on S3
+Sign in to the AWS Management Console and navigate to the Amazon S3 service.
+Click "Create bucket," enter a unique bucket name that matches your desired domain name, and select a region.
+Upload your static website content (HTML, CSS, JavaScript, images, etc.) to the bucket using the "Upload" button.
+In the bucket settings, scroll down to the "Static website hosting" section, enable it, and enter "index.html" as the Index document.
+Click on the "Permissions" tab, then "Bucket Policy." Use the AWS Policy Generator to create a policy that grants public read access to your content. Replace "your-bucket-name" with the actual bucket name in the generated policy:
+
+{
+  "Version":"2012-10-17",
+  "Statement":[{
+    "Sid":"PublicReadGetObject",
+        "Effect":"Allow",
+      "Principal": "*",
+      "Action":["s3:GetObject"],
+      "Resource":["arn:aws:s3:::your-bucket-name/*"
+      ]
+    }
+  ]
+}
+Access your website using the provided S3 bucket URL, e.g., http://your-bucket-name.s3-website-us-west-2.amazonaws.com.
+Step 2: Purchase a Custom Domain
+Buy a domain name from a domain registrar, such as GoDaddy or Namecheap.
+Step 3: Configure Amazon Route 53
+In the AWS Management Console, navigate to the Route 53 service and click "Create hosted zone."
+Enter your custom domain name and select "Public hosted zone." Click "Create."
+Note the four nameservers provided by Route 53 (e.g., ns-123.awsdns-12.com).
+Update the nameservers in your domain registrar's DNS configuration to match the ones provided by Route 53.
+Note
+It may take up to 48 hours for the nameserver updates to propagate across the internet.
+
+Step 4: Create an SSL Certificate
+Go to the AWS Certificate Manager (ACM) and click "Request a certificate."
+Choose "Request a public certificate," enter your domain name (including any subdomains), and click "Next."
+Select "DNS validation" and click "Review." Confirm the details and click "Confirm and request."
+On the certificate details page, click the "Create record in Route 53" button for each DNS validation record. This will automatically create the necessary records in your hosted zone.
+Wait for the certificate status to change from "Pending validation" to "Issued."
+Step 5: Configure CloudFront
+In the AWS Management Console, navigate to the CloudFront service and click "Create distribution."
+Choose "Web" as the delivery method and click "Get started."
+Set the "Origin domain" to your S3 bucket using the website endpoint (e.g., your-bucket-name.s3-website-us-west-2.amazonaws.com).
+Configure the "Viewer protocol policy" to "Redirect HTTP to HTTPS."
+Under "Alternate Domain Names (CNAMEs)," add your custom domain name (e.g., example.com and www.example.com).
+Scroll down to the "SSL certificate" section, click "Custom SSL certificate," and select the SSL certificate you created earlier.
+Click "Create distribution" and wait for the status to change from "InProgress" to "Deployed."
+Step 6: Route Traffic Using Route 53
+In Route 53, create a new A record for your custom domain. Set the "Alias" toggle to "Yes" and select the CloudFront distribution you created earlier as the alias target.
+Repeat this process for any subdomains (e.g., www.example.com) you want to route to your static website.
+Conclusion
+By following these detailed steps, you have successfully hosted a static website on Amazon S3, secured it with an SSL certificate, and configured a custom domain using Amazon Route 53 and CloudFront. Your website is now accessible via your custom domain name and benefits from the performance and security features provided by AWS.
